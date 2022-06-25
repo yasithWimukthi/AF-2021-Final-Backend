@@ -7,6 +7,7 @@ const {dbConnect} = require("./helper/dbConnection");
 require('dotenv').config();
 
 const roomRoutes = require('./routes/RoomRoutes');
+const categoryRoutes = require('./routes/CategoryRoutes');
 
 const app = new Koa();
 const router = new KoaRouter();
@@ -16,7 +17,7 @@ app.use(bodyParser());
 app.use(json());
 app.use(router.routes()).use(router.allowedMethods());
 app.use(roomRoutes.routes());
-
+app.use(categoryRoutes.routes());
 
 app.listen(3000, () => {
     dbConnect();
