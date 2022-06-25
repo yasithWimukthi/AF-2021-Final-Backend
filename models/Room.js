@@ -20,6 +20,10 @@ const roomSchema = new Schema({
         type: Number,
         required: true
     },
+    category: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Category',
+    }]
 },{timestamps: true});
 
 const Room = mongoose.model('Room', roomSchema);
