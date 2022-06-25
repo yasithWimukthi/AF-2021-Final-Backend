@@ -13,6 +13,7 @@ app.use(cors());
 app.use(bodyParser());
 app.use(json());
 
+
 app.listen(3000, () => {
     dbConnect();
     console.log('Server is running on port 3000');
