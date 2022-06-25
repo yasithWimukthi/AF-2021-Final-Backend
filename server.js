@@ -6,12 +6,16 @@ const json = require('koa-json');
 const {dbConnect} = require("./helper/dbConnection");
 require('dotenv').config();
 
+const roomRoutes = require('./routes/RoomRoutes');
+
 const app = new Koa();
 const router = new KoaRouter();
 
 app.use(cors());
 app.use(bodyParser());
 app.use(json());
+app.use(router.routes()).use(router.allowedMethods());
+app.use(roomRoutes.routes());
 
 
 app.listen(3000, () => {
