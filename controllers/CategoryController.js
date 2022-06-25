@@ -1,0 +1,44 @@
+const Category = require('../models/Category');
+
+const addCategory = async (ctx) => {
+    try {
+        const {name, description} = ctx.request.body;
+
+        if(!name){
+            ctx.status = 400;
+            return ctx.body = {
+                message: 'Name is required'
+            }
+        }
+
+        if(!description){
+            ctx.status = 400;
+            return ctx.body = {
+                message: 'Description is required'
+            }
+        }
+
+        if (!name || !description) {
+            ctx.status = 400;
+            return ctx.body = {
+                message: 'Bad Request'
+            };
+        }
+
+        const category = new Category({name, description});
+        await category.save();
+        return ctx.body = {
+            message: 'Category added successfully',
+            category
+        }
+    }catch (err) {
+        ctx.status = 500;
+        return ctx.body = {
+            message: 'Internal Server Error'
+        }
+    }
+}
+
+module.exports ={
+    addCategory
+}
