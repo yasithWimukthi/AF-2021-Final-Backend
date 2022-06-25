@@ -88,8 +88,24 @@ const getRoomsByCategory = async (ctx) => {
     }
 }
 
+const getRoomsInEachCategory = async (ctx) => {
+    try {
+        const categories = await Category.find().populate('rooms');
+        return ctx.body = {
+            message: 'Rooms retrieved successfully',
+            categories
+        }
+    }catch (err) {
+        ctx.status = 500;
+        return ctx.body = {
+            message: 'Internal Server Error'
+        }
+    }
+}
+
 module.exports ={
     addCategory,
     getAllCategories,
-    getRoomsByCategory
+    getRoomsByCategory,
+    getRoomsInEachCategory
 }
