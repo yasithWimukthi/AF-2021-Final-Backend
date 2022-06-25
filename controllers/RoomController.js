@@ -1,4 +1,5 @@
 const Room = require('../models/Room');
+const Category = require('../models/Category');
 
 /**
  * Add a room
@@ -38,8 +39,14 @@ const addRoom = async (ctx) => {
                 message: 'Bad Request'
             };
         }
-        const room = new Room({code, amount, wing, pax, category});
+        const room = new Room({code, amount, wing, pax});
+        if (category){
+            room.category.push(category);
+        }
         await room.save();
+        const roomAddedCategory = await Category.findById(category);
+        roomAddedCategory.rooms.push(room._id);
+        await roomAddedCategory.save();
         return (ctx.body = {message: 'Room added successfully',room});
     }
     catch (err) {
@@ -61,6 +68,7 @@ const getAllRooms = async (ctx) => {
         ctx.throw(500, err);
     }
 }
+
 
 module.exports = {
     addRoom,
