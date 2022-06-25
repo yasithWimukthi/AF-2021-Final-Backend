@@ -26,6 +26,7 @@ const addCategory = async (ctx) => {
         }
 
         const category = new Category({name, description});
+
         await category.save();
         return ctx.body = {
             message: 'Category added successfully',
