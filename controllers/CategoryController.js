@@ -1,4 +1,5 @@
 const Category = require('../models/Category');
+const Room = require("../models/Room");
 
 const addCategory = async (ctx) => {
     try {
@@ -55,7 +56,24 @@ const getAllCategories = async (ctx) => {
     }
 }
 
+const getRoomsByCategory = async (ctx) => {
+    try {
+        const {categoryId} = ctx.request.body;
+        const rooms = await Room.find({category: categoryId});
+        return ctx.body = {
+            message: 'Rooms retrieved successfully',
+            rooms
+        }
+    }catch (err) {
+        ctx.status = 500;
+        return ctx.body = {
+            message: 'Internal Server Error'
+        }
+    }
+}
+
 module.exports ={
     addCategory,
-    getAllCategories
+    getAllCategories,
+    getRoomsByCategory
 }
